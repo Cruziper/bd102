@@ -1,0 +1,9 @@
+drop table if exists regiao cascade;
+drop table if exists concelho cascade;
+drop table if exists instituicao cascade;
+drop table if exists medico cascade;
+drop table if exists consulta cascade;
+drop table if exists prescricao cascade;
+drop table if exists analise cascade;
+drop table if exists venda_farmacia cascade;
+drop table if exists prescricao_venda cascade;
