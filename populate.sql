@@ -1,4 +1,4 @@
---regiao
+--regiao (num_regiao, nome (regiao), num_habitantes)
 
 insert into regiao values(1, 'Norte', 3689);
 insert into regiao values(2, 'Centro', 2327);
@@ -9,7 +9,7 @@ insert into regiao values(6, 'Madeira', 267785);
 insert into regiao values(7, 'Açores', 246746);
 
 
---concelho
+--concelho (num_concelho, num_regiao, nome (concelho), num_habitantes)
 
 insert into concelho values(65, 3,'Cascais', 210889);
 insert into concelho values(1, 2,'Abrantes', 39325);
@@ -21,7 +21,7 @@ insert into concelho values(306, 2,'Viseu', 99274);
 insert into concelho values(105, 6,'Funchal', 111541);
 
 
---instituicao
+--instituicao (nome (instituicao), tipo, num_regiao, num_concelho)
 
 insert into instituicao values('A', 'farmacia', 3, 65);
 insert into instituicao values('B', 'laboratorio', 2, 1);
@@ -33,7 +33,7 @@ insert into instituicao values('G', 'farmacia', 2, 306);
 insert into instituicao values('H', 'hospital', 6, 105);
 
 
---medico
+--medico (num_cedula, nome (medico), especialidade)
 
 insert into medico values(1, 'Joaquim', 'Cardiologia');
 insert into medico values(2, 'Alberto', 'Pediatria');
@@ -45,7 +45,7 @@ insert into medico values(7, 'Catarina', 'Dermatologia');
 insert into medico values(8, 'Pedro', 'Neurocirurgia');
 
 
---consulta
+--consulta (num_cedula, num_doente, data, nome_instituicao)
 
 insert into consulta values(1, 2, '2020-12-03', 'A');
 insert into consulta values(3, 1, '2020-12-22', 'B');
@@ -57,7 +57,7 @@ insert into consulta values(7, 8, '2020-12-22', 'G');
 insert into consulta values(5, 7, '2020-12-05', 'C');
 
 
---prescricao
+--prescricao (num_cedula, num_doente, data, substancia, quant)
 
 insert into prescricao values(1, 2, '2020-12-03', 'Calcitrin', 2);
 insert into prescricao values(3, 1, '2020-12-22', 'Ibuprofeno', 1);
@@ -69,7 +69,7 @@ insert into prescricao values(3, 1, '2020-12-22', 'Amoxicilina', 4);
 insert into prescricao values(5, 7, '2020-12-05', 'Sulfadiazina', 5);
 
 
---analise
+--analise (num_analise, especialidade, num_cedula, num_doente, data, data_registo, nome, quant, inst)
 
 insert into analise values(1, 'Cardiologia', 1, 2, '2020-12-03', '2020-12-03', 'A', 2, 'A');
 insert into analise values(2, 'Dermatologia', 3, 1, '2020-12-22', '2020-12-22', 'B', 1, 'B');
@@ -77,7 +77,7 @@ insert into analise values(3, 'Cardiologia', 4, 6, '2020-12-27', '2020-12-27', '
 insert into analise values(4, 'Dermatologia', 3, 1, '2020-12-22', '2020-12-22', 'D', 4, 'B');
 
 
---venda_farmacia
+--venda_farmacia (num_venda, data_registo, substancia, quant, preco, inst)
 
 insert into venda_farmacia values(1, '2020-12-03', 'Calcitrin', 2, 8, 'A');
 insert into venda_farmacia values(2, '2020-12-22', 'Ibuprofeno', 1, 7, 'B');
@@ -89,7 +89,7 @@ insert into venda_farmacia values(7, '2020-12-22', 'Amoxicilina', 4, 25, 'G');
 insert into venda_farmacia values(8, '2020-12-05', 'Sulfadiazina', 5, 28, 'H');
 
 
---prescricao_venda
+--prescricao_venda (num_cedula, num_doente, data, substancia, num_venda)
 
 insert into prescricao_venda values(1, 2, '2020-12-03', 'Calcitrin', 1);
 insert into prescricao_venda values(3, 1, '2020-12-22', 'Ibuprofeno', 2);
