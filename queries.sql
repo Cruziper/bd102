@@ -45,5 +45,5 @@ where c.nome = 'Arouca';
 
 SELECT num_doente
 FROM consulta 
-WHERE num_doente IN (SELECT num_doente FROM analise a WHERE date_trunc('month', a.data) = date_trunc('month', CURRENT_DATE))
-AND num_doente NOT IN (SELECT num_doente FROM prescricao p WHERE date_trunc('month', p.data) = date_trunc('month', CURRENT_DATE));
+WHERE num_doente IN (SELECT num_doente FROM analise a WHERE date_part('month', a.data) = date_part('month', CURRENT_DATE))
+AND num_doente NOT IN (SELECT num_doente FROM prescricao p WHERE date_part('month', p.data) = date_part('month', CURRENT_DATE));
