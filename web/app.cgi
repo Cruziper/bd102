@@ -2,7 +2,7 @@
 
 from wsgiref.handlers import CGIHandler
 from flask import Flask
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 
 ## Libs postgres
 import psycopg2
@@ -66,9 +66,26 @@ def update_medico():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    query = f'''UPDATE medico SET num_cedula={request.form["novo_num_cedula"]}, nome={request.form["novo_nome"]}, especialidade={request.form["nova_especialidade"]} WHERE num_cedula = '{request.form["num_cedula"]}', nome = '{request.form["nome"]}', especialidade = '{request.form["especialidade"]}';'''
+    query = f'''UPDATE medico SET nome='{request.form["novo_nome"]}', especialidade='{request.form["nova_especialidade"]}' WHERE num_cedula = '{request.form["num_cedula"]}' and nome = '{request.form["nome"]}' and especialidade = '{request.form["especialidade"]}';'''
     cursor.execute(query)
-    return query
+    return redirect(url_for('list_medico'))
+  except Exception as e:
+    return str(e) 
+  finally:
+    dbConn.commit()
+    cursor.close()
+    dbConn.close()
+
+@app.route('/remove', methods=["DELETE"])
+def remove_medico():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = f'''DELETE FROM medico WHERE num_cedula = '{request.form["num_cedula"]}' and nome = '{request.form["nome"]}' and especialidade = '{request.form["especialidade"]}';'''
+    cursor.execute(query)
+    return redirect(url_for('list_medico'))
   except Exception as e:
     return str(e) 
   finally:
