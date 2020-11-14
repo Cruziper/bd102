@@ -34,7 +34,7 @@ create table concelho(
 );
 
 create table instituicao(
-    nome char(100) not null,
+    nome varchar(100) not null,
     tipo tipo not null,
     num_regiao integer not null,
     num_concelho integer not null,
@@ -45,8 +45,8 @@ create table instituicao(
 
 create table medico(
     num_cedula integer not null unique,
-    nome char(100) not null,
-    especialidade char(100) not null,
+    nome varchar(100) not null,
+    especialidade varchar(100) not null,
     constraint pk_medico primary key(num_cedula)
 );
 
@@ -54,7 +54,7 @@ create table consulta(
     num_cedula integer not null,
     num_doente integer not null,
     data date not null,
-    nome_instituicao char(100) not null,
+    nome_instituicao varchar(100) not null,
     constraint pk_consulta primary key(num_cedula, num_doente, data),
     constraint fk_medico foreign key(num_cedula) 
         references medico,
@@ -66,7 +66,7 @@ create table prescricao(
     num_cedula integer not null,
     num_doente integer not null,
     data date not null,
-    substancia char(100) not null,
+    substancia varchar(100) not null,
     quant integer not null,
     constraint pk_prescricao primary key(num_cedula, num_doente, data, substancia),
     constraint fk_consulta foreign key(num_cedula, num_doente, data) 
@@ -75,14 +75,14 @@ create table prescricao(
 
 create table analise(
     num_analise integer not null unique,
-    especialidade char(100) not null,
+    especialidade varchar(100) not null,
     num_cedula integer not null,
     num_doente integer not null,
     data date not null,
     data_registo date not null,
-    nome char(100) not null,
+    nome varchar(100) not null,
     quant integer not null,
-    inst char(100) not null,
+    inst varchar(100) not null,
     constraint pk_analise primary key(num_analise),
     constraint fk_consulta foreign key(num_cedula, num_doente, data) 
         references consulta,
@@ -93,10 +93,10 @@ create table analise(
 create table venda_farmacia(
     num_venda integer not null unique,
     data_registo date not null,
-    substancia char(100) not null,
+    substancia varchar(100) not null,
     quant integer not null,
     preco integer not null,
-    inst char(100) not null,
+    inst varchar(100) not null,
     constraint pk_venda_farmacia primary key(num_venda),
     constraint fk_instituicao foreign key(inst) 
         references instituicao
@@ -106,7 +106,7 @@ create table prescricao_venda(
     num_cedula integer not null,
     num_doente integer not null,
     data date not null,
-    substancia char(100) not null,
+    substancia varchar(100) not null,
     num_venda integer not null,
     constraint pk_prescricao_venda primary key(num_cedula, num_doente, data, substancia, num_venda),
     constraint fk_venda_farmacia foreign key(num_venda)

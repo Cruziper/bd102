@@ -45,13 +45,36 @@ def list_medico():
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
     query = "SELECT * FROM medico;"
     cursor.execute(query)
-    return render_template("medico.html", cursor=cursor)
+    return render_template("medico.html", cursor=cursor, params=request.args)
   except Exception as e:
     return str(e) #Renders a page with the error.
   finally:
     cursor.close()
     dbConn.close()
 
+@app.route('/editar_medico')
+def alter_medico():
+  try:
+    return render_template("editar_medico.html", params=request.args)
+  except Exception as e:
+    return str(e)
+
+@app.route('/update', methods=["POST"])
+def update_medico():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = f'''UPDATE medico SET num_cedula={request.form["novo_num_cedula"]}, nome={request.form["novo_nome"]}, especialidade={request.form["nova_especialidade"]} WHERE num_cedula = '{request.form["num_cedula"]}', nome = '{request.form["nome"]}', especialidade = '{request.form["especialidade"]}';'''
+    cursor.execute(query)
+    return query
+  except Exception as e:
+    return str(e) 
+  finally:
+    dbConn.commit()
+    cursor.close()
+    dbConn.close()
 
 
 CGIHandler().run(app)
