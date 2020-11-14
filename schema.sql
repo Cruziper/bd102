@@ -107,8 +107,10 @@ create table prescricao_venda(
     num_doente integer not null,
     data date not null,
     substancia char(100) not null,
-    num_venda integer not null unique,
+    num_venda integer not null,
     constraint pk_prescricao_venda primary key(num_cedula, num_doente, data, substancia, num_venda),
+    constraint fk_venda_farmacia foreign key(num_venda)
+        references venda_farmacia,
     constraint fk_prescricao foreign key(num_cedula, num_doente, data, substancia) 
         references prescricao
 );
