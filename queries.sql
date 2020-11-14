@@ -30,10 +30,15 @@ GROUP BY num_regiao;
 --------------------------------------------------------------------
 --3.
 
-SELECT * FROM
-medico m natural join consulta c natural join prescricao p natural join instituicao i
-WHERE c.nome_instituicao = i.nome and m.nome != i.nome and p.substancia = 'Calcitrin' and i.tipo = 'farmacia' and c.data = '2020-11-03';
-
+SELECT nome_medico, num_cedula FROM
+concelho c natural join 
+    (SELECT nome_medico, num_cedula, num_concelho FROM
+    instituicao i natural join
+        (SELECT num_cedula, m.nome as nome_medico, nome_instituicao FROM
+        medico m natural join consulta c natural join prescricao p
+        where p.substancia = 'Aspirina' and date_part('year', c.data) = date_part('year', CURRENT_DATE)) as num_p
+    where i.nome = num_p.nome_instituicao and i.tipo = 'farmacia') as t
+where c.nome = 'Arouca';
 
 --------------------------------------------------------------------
 --4.

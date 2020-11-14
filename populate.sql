@@ -1,9 +1,9 @@
 --regiao (num_regiao, nome (regiao), num_habitantes)
 
-insert into regiao values(1, 'Norte', 3689);
-insert into regiao values(2, 'Centro', 2327);
+insert into regiao values(1, 'Norte', 3689609);
+insert into regiao values(2, 'Centro',  2327580);
 insert into regiao values(3, 'Lisboa', 504718);
-insert into regiao values(4, 'Alentejo', 166706);
+insert into regiao values(4, 'Alentejo', 760098);
 insert into regiao values(5, 'Algarve', 451006);
 insert into regiao values(6, 'Madeira', 267785);
 insert into regiao values(7, 'Açores', 246746);
@@ -17,7 +17,7 @@ insert into concelho values(67, 2,'Castelo Branco', 225916);
 insert into concelho values(93, 4,'Évora', 56596);
 insert into concelho values(210, 1,'Porto', 214349);
 insert into concelho values(257, 3,'Sintra', 381728);
-insert into concelho values(306, 2,'Viseu', 99274);
+insert into concelho values(34, 1,'Arouca', 22359);
 insert into concelho values(105, 6,'Funchal', 111541);
 
 
@@ -29,7 +29,7 @@ insert into instituicao values('C', 'clinica', 2, 67);
 insert into instituicao values('D', 'hospital', 4, 93);
 insert into instituicao values('E', 'laboratorio', 1, 210);
 insert into instituicao values('F', 'clinica', 3, 257);
-insert into instituicao values('G', 'farmacia', 2, 306);
+insert into instituicao values('G', 'farmacia', 1, 34);
 insert into instituicao values('H', 'hospital', 6, 105);
 
 
@@ -53,7 +53,7 @@ insert into consulta values(5, 3, '2020-11-13', 'C');
 insert into consulta values(1, 5, '2020-11-13', 'A');
 insert into consulta values(4, 6, '2019-01-27', 'D');
 insert into consulta values(6, 3, '2019-03-06', 'B');
-insert into consulta values(7, 8, '2019-06-22', 'G');
+insert into consulta values(7, 8, '2020-06-22', 'G');
 insert into consulta values(5, 7, '2020-11-05', 'C');
 
 
@@ -67,6 +67,7 @@ insert into prescricao values(4, 6, '2019-01-27', 'Gliclazida', 3);
 insert into prescricao values(6, 3, '2019-03-06', 'Diazepam', 6);
 insert into prescricao values(3, 1, '2019-06-22', 'Amoxicilina', 4);
 insert into prescricao values(5, 7, '2020-11-05', 'Sulfadiazina', 5);
+insert into prescricao values(7, 8, '2020-06-22', 'Aspirina', 9);
 
 
 --analise (num_analise, especialidade, num_cedula, num_doente, data, data_registo, nome, quant, inst)
@@ -87,6 +88,7 @@ insert into venda_farmacia values(5, '2019-01-27', 'Gliclazida', 3, 10, 'E');
 insert into venda_farmacia values(6, '2019-03-06', 'Diazepam', 6, 30, 'F');
 insert into venda_farmacia values(7, '2019-06-22', 'Amoxicilina', 4, 25, 'G');
 insert into venda_farmacia values(8, '2020-11-05', 'Sulfadiazina', 5, 28, 'H');
+insert into venda_farmacia values(9, '2020-06-22', 'Aspirina', 4, 25, 'G');
 
 
 --prescricao_venda (num_cedula, num_doente, data, substancia, num_venda)
@@ -99,3 +101,4 @@ insert into prescricao_venda values(4, 6, '2019-01-27', 'Gliclazida', 5);
 insert into prescricao_venda values(6, 3, '2019-03-06', 'Diazepam', 6);
 insert into prescricao_venda values(3, 1, '2019-06-22', 'Amoxicilina', 7);
 insert into prescricao_venda values(5, 7, '2020-11-05', 'Sulfadiazina', 8);
+insert into prescricao_venda values(7, 8, '2020-06-22', 'Aspirina', 9);
