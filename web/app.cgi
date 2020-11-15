@@ -134,6 +134,45 @@ def remove_medico():
     cursor.close()
     dbConn.close()
 
+@app.route('/venda_farmacia')
+def list_venda_farmacia():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = "SELECT * FROM venda_farmacia;"
+    cursor.execute(query)
+    return render_template("venda_farmacia.html", cursor=cursor, params=request.args)
+  except Exception as e:
+    return str(e) #Renders a page with the error.
+  finally:
+    cursor.close()
+    dbConn.close()
+
+@app.route('/registo_venda')
+def alter_venda_farmacia():
+  try:
+    return render_template("registo_venda.html", params=request.args)
+  except Exception as e:
+    return str(e)
+
+@app.route('/registo', methods=["POST"])
+def update_venda_farmacia():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = f'''INSERT INTO venda_farmacia VALUES ('{request.form["num_venda"]}', '{request.form["data_registo"]}', '{request.form["substancia"]}', '{request.form["quant"]}', '{request.form["preco"]}', '{request.form["inst"]}');'''
+    cursor.execute(query)
+    return redirect(url_for('list_venda_farmacia'))
+  except Exception as e:
+    return str(e) 
+  finally:
+    dbConn.commit()
+    cursor.close()
+    dbConn.close()
 
 CGIHandler().run(app)
 
