@@ -30,7 +30,7 @@ create table concelho(
     num_habitantes integer not null,
     constraint pk_concelho primary key(num_concelho, num_regiao),
     constraint fk_regiao foreign key(num_regiao) 
-        references regiao
+        references regiao on delete cascade
 );
 
 create table instituicao(
@@ -40,7 +40,7 @@ create table instituicao(
     num_concelho integer not null,
     constraint pk_instituicao primary key(nome),
     constraint fk_concelho foreign key(num_concelho, num_regiao) 
-        references concelho
+        references concelho on delete cascade 
 );
 
 create table medico(
@@ -57,9 +57,9 @@ create table consulta(
     nome_instituicao varchar(100) not null,
     constraint pk_consulta primary key(num_cedula, num_doente, data),
     constraint fk_medico foreign key(num_cedula) 
-        references medico,
+        references medico on delete cascade,
     constraint fk_instituicao foreign key(nome_instituicao) 
-        references instituicao
+        references instituicao on delete cascade
 );
 
 create table prescricao(
@@ -70,7 +70,7 @@ create table prescricao(
     quant integer not null,
     constraint pk_prescricao primary key(num_cedula, num_doente, data, substancia),
     constraint fk_consulta foreign key(num_cedula, num_doente, data) 
-        references consulta
+        references consulta on delete cascade
 );
 
 create table analise(
@@ -85,9 +85,9 @@ create table analise(
     inst varchar(100) not null,
     constraint pk_analise primary key(num_analise),
     constraint fk_consulta foreign key(num_cedula, num_doente, data) 
-        references consulta,
+        references consulta on delete cascade,
     constraint fk_instituicao foreign key(nome) 
-        references instituicao
+        references instituicao on delete cascade
 );
 
 create table venda_farmacia(
@@ -99,7 +99,7 @@ create table venda_farmacia(
     inst varchar(100) not null,
     constraint pk_venda_farmacia primary key(num_venda),
     constraint fk_instituicao foreign key(inst) 
-        references instituicao
+        references instituicao on delete cascade
 );
 
 create table prescricao_venda(
@@ -110,7 +110,7 @@ create table prescricao_venda(
     num_venda integer not null,
     constraint pk_prescricao_venda primary key(num_cedula, num_doente, data, substancia, num_venda),
     constraint fk_venda_farmacia foreign key(num_venda)
-        references venda_farmacia,
+        references venda_farmacia on delete cascade,
     constraint fk_prescricao foreign key(num_cedula, num_doente, data, substancia) 
-        references prescricao
+        references prescricao on delete cascade
 );

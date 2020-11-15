@@ -18,6 +18,8 @@
                 <td>{{ record[1] }}</td>
                 <td>{{ record[2] }}</td>
                 <td>{{ record[3] }}</td>
+                <td><a href="editar_instituicao?nome={{ record[0] }}&tipo={{ record[1] }}&num_regiao={{ record[2] }}&num_concelho={{ record[3] }}">Editar</a></td>
+                <td><a href="remove?nome={{ record[0] }}&tipo={{ record[1] }}&num_regiao={{ record[2] }}&num_concelho={{ record[3] }}">Remover</a></td>
               </tr>
             {% endfor %}
           </tbody>

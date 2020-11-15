@@ -36,6 +36,47 @@ def list_instituicao():
     cursor.close()
     dbConn.close()
 
+@app.route('/editar_instituicao')
+def alter_instituicao():
+  try:
+    return render_template("editar_instituicao.html", params=request.args)
+  except Exception as e:
+    return str(e)
+
+@app.route('/update', methods=["POST"])
+def update_instituicao():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = f'''UPDATE instituicao SET tipo='{request.form["novo_tipo"]}', num_regiao='{request.form["novo_num_regiao"]}', num_concelho='{request.form["novo_num_concelho"]}' WHERE nome = '{request.form["nome"]}' and tipo = '{request.form["tipo"]}' and num_regiao = '{request.form["num_regiao"]}' and num_concelho = '{request.form["num_concelho"]}';'''
+    cursor.execute(query)
+    return redirect(url_for('list_instituicao'))
+  except Exception as e:
+    return str(e) 
+  finally:
+    dbConn.commit()
+    cursor.close()
+    dbConn.close()
+
+@app.route('/remove', methods=["DELETE", "GET"])
+def remove_instituicao():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = f'''DELETE FROM instituicao WHERE nome = '{request.args.get('nome')}' and tipo = '{request.args.get('tipo')}' and num_regiao = '{request.args.get('num_regiao')}' and num_concelho = '{request.args.get('num_concelho')}';'''
+    cursor.execute(query)
+    return redirect(url_for('list_instituicao'))
+  except Exception as e:
+    return str(e) 
+  finally:
+    dbConn.commit()
+    cursor.close()
+    dbConn.close()
+
 @app.route('/medico')
 def list_medico():
   dbConn=None
@@ -76,14 +117,14 @@ def update_medico():
     cursor.close()
     dbConn.close()
 
-@app.route('/remove', methods=["DELETE"])
+@app.route('/remove', methods=["DELETE", "GET"])
 def remove_medico():
   dbConn=None
   cursor=None
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    query = f'''DELETE FROM medico WHERE num_cedula = '{request.form["num_cedula"]}' and nome = '{request.form["nome"]}' and especialidade = '{request.form["especialidade"]}';'''
+    query = f'''DELETE FROM medico WHERE num_cedula = '{request.args.get('num_cedula')}' and nome = '{request.args.get('nome')}' and especialidade = '{request.args.get('especialidade')}';'''
     cursor.execute(query)
     return redirect(url_for('list_medico'))
   except Exception as e:

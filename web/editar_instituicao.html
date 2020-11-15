@@ -1,0 +1,15 @@
+<html>
+    <body>
+        <h3>Alterar dados da instituicao {{ params.get("nome") }}</h3>
+        <form action="update" method="post">
+            <p><input type="hidden" name="nome" value="{{ params.get('nome') }}"/></p>
+            <p><input type="hidden" name="tipo" value="{{ params.get('tipo') }}"/></p>
+            <p>Novo tipo: <input type="text" name="novo_tipo"/></p>
+            <p><input type="hidden" name="num_regiao" value="{{ params.get('num_regiao') }}"/></p>
+            <p>Nova numero de região: <input type="text" name="novo_num_regiao"/></p>
+            <p><input type="hidden" name="num_concelho" value="{{ params.get('num_concelho') }}"/></p>
+            <p>Novo numero de concelho: <input type="text" name="novo_num_concelho"/></p>
+            <p><input type="submit" value="Submit"/></p>
+        </form>
+    </body>
+</html>
