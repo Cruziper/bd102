@@ -17,12 +17,13 @@
                 <td>{{ record[1] }}</td>
                 <td>{{ record[2] }}</td>
                 <td><a href="editar_medico?num_cedula={{ record[0] }}&nome={{ record[1] }}&especialidade={{ record[2] }}">Editar</a></td>
-                <td><a href="remove?num_cedula={{ record[0] }}&nome={{ record[1] }}&especialidade={{ record[2] }}">Remover</a></td>
+                <td><a href="remove_med?num_cedula={{ record[0] }}&nome={{ record[1] }}&especialidade={{ record[2] }}">Remover</a></td>
                 <td><a href="lista_substancia?num_cedula={{ record[0] }}">Lista Substancia</a></td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
+        <p><a href="inserir_medico">Inserir</a></p>
       {% else %}
         <p> Erro: ao obter dados da base de dados!</p>
       {% endif %}
