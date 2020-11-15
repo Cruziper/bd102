@@ -18,6 +18,7 @@
                 <td>{{ record[2] }}</td>
                 <td><a href="editar_medico?num_cedula={{ record[0] }}&nome={{ record[1] }}&especialidade={{ record[2] }}">Editar</a></td>
                 <td><a href="remove?num_cedula={{ record[0] }}&nome={{ record[1] }}&especialidade={{ record[2] }}">Remover</a></td>
+                <td><a href="lista_substancia?num_cedula={{ record[0] }}">Lista Substancia</a></td>
               </tr>
             {% endfor %}
           </tbody>
