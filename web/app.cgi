@@ -20,6 +20,9 @@ DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (DB_HOST, DB_DA
 
 ## Runs the function once the root page is requested.
 ## The request comes with the folder structure setting ~/web as the root
+
+#FUNCOES INSTITUICAO--------------------------------------------------------------------------------------
+
 @app.route('/instituicao')
 def list_instituicao():
   dbConn=None
@@ -100,6 +103,9 @@ def remove_instituicao():
     dbConn.commit()
     cursor.close()
     dbConn.close()
+
+#--------------------------------------------------------------------------------------------------------
+#FUNCOES MEDICO------------------------------------------------------------------------------------------
 
 @app.route('/medico')
 def list_medico():
@@ -183,6 +189,9 @@ def remove_medico():
     cursor.close()
     dbConn.close()
 
+#--------------------------------------------------------------------------------------------------------
+#FUNCOES VENDA_FARMACIA----------------------------------------------------------------------------------
+
 @app.route('/venda_farmacia')
 def list_venda_farmacia():
   dbConn=None
@@ -223,6 +232,9 @@ def update_venda_farmacia():
     cursor.close()
     dbConn.close()
 
+#--------------------------------------------------------------------------------------------------------
+#FUNCOES SUBSTANCIA--------------------------------------------------------------------------------------
+
 @app.route('/lista_substancia')
 def alter_listasubs():
   try:
@@ -247,6 +259,8 @@ def list_substancias():
     cursor.close()
     dbConn.close()
 
+#--------------------------------------------------------------------------------------------------------
+#FUNCOES PRESCRICAO--------------------------------------------------------------------------------------
 
 @app.route('/prescricao')
 def list_prescricao():
@@ -328,6 +342,91 @@ def remove_prescricao():
     dbConn.commit()
     cursor.close()
     dbConn.close()
+
+#-------------------------------------------------------------------------------------------------------
+#FUNCOES analise---------------------------------------------------------------------------------------
+
+@app.route('/analise')
+def list_analise():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = "SELECT * FROM analise;"
+    cursor.execute(query)
+    return render_template("analise.html", cursor=cursor)
+  except Exception as e:
+    return str(e) #Renders a page with the error.
+  finally:
+    cursor.close()
+    dbConn.close()
+
+@app.route('/editar_analise')
+def alter_analise():
+  try:
+    return render_template("editar_analise.html", params=request.args)
+  except Exception as e:
+    return str(e)
+
+@app.route('/inserir_analise')
+def new_analise():
+  try:
+    return render_template("inserir_analise.html")
+  except Exception as e:
+    return str(e)
+
+@app.route('/update_analis', methods=["POST"])
+def update_analise():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = f'''UPDATE analise SET num_analise='{request.form["novo_num_analise"]}', especialidade='{request.form["nova_especialidade"]}', num_cedula='{request.form["novo_num_cedula"]}', num_doente='{request.form["novo_num_doente"]}', data='{request.form["nova_data"]}', data_registo='{request.form["nova_data_registo"]}', nome='{request.form["novo_nome"]}', quant='{request.form["nova_quant"]}', inst='{request.form["nova_inst"]}' WHERE num_analise='{request.form["num_analise"]}' and especialidade='{request.form["especialidade"]}' and num_cedula='{request.form["num_cedula"]}' and num_doente='{request.form["num_doente"]}' and data='{request.form["data"]}' and data_registo='{request.form["data_registo"]}' and nome='{request.form["nome"]}' and quant='{request.form["quant"]}' and inst='{request.form["inst"]}';'''
+    cursor.execute(query)
+    return redirect(url_for('list_analise'))
+  except Exception as e:
+    return str(e) 
+  finally:
+    dbConn.commit()
+    cursor.close()
+    dbConn.close()
+
+@app.route('/insert_analis', methods=["POST"])
+def insert_analise():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = f'''insert into analise values('{request.form["novo_num_analise"]}', '{request.form["nova_especialidade"]}', '{request.form["novo_num_cedula"]}', '{request.form["novo_num_doente"]}', '{request.form["nova_data"]}', '{request.form["nova_data_registo"]}', '{request.form["novo_nome"]}', '{request.form["nova_quant"]}', '{request.form["nova_inst"]}');'''
+    cursor.execute(query)
+    return redirect(url_for('list_analise'))
+  except Exception as e:
+    return str(e) 
+  finally:
+    dbConn.commit()
+    cursor.close()
+    dbConn.close()
+
+@app.route('/remove_analis', methods=["DELETE", "GET"])
+def remove_analise():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = f'''DELETE FROM analise WHERE num_analise='{request.args.get('num_analise')}' and especialidade='{request.args.get('especialidade')}' and num_cedula='{request.args.get('num_cedula')}' and num_doente='{request.args.get('num_doente')}' and data='{request.args.get('data')}' and data_registo='{request.args.get('data_registo')}' and nome='{request.args.get('nome')}' and quant='{request.args.get('quant')}' and inst='{request.args.get('inst')}';'''
+    cursor.execute(query)
+    return redirect(url_for('list_analise'))
+  except Exception as e:
+    return str(e) 
+  finally:
+    dbConn.commit()
+    cursor.close()
+    dbConn.close()
+
 
 CGIHandler().run(app)
 

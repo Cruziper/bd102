@@ -86,7 +86,7 @@ create table analise(
     constraint pk_analise primary key(num_analise),
     constraint fk_consulta foreign key(num_cedula, num_doente, data) 
         references consulta on delete cascade on update cascade,
-    constraint fk_instituicao foreign key(nome) 
+    constraint fk_instituicao foreign key(inst) 
         references instituicao on delete cascade on update cascade
 );
 

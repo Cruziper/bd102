@@ -1,0 +1,26 @@
+<html>
+    <body>
+        <h3>Alterar dados da analise {{ params.get("nome") }}</h3>
+        <form action="update_analis" method="post">
+            <p><input type="hidden" name="num_analise" value="{{ params.get('num_analise') }}"/></p>
+            <p>Novo numero de analise: <input type="text" name="novo_num_analise"/></p>
+            <p><input type="hidden" name="especialidade" value="{{ params.get('especialidade') }}"/></p>
+            <p>Nova especialidade: <input type="text" name="nova_especialidade"/></p>
+            <p><input type="hidden" name="num_cedula" value="{{ params.get('num_cedula') }}"/></p>
+            <p>Novo numero de cedula: <input type="text" name="novo_num_cedula"/></p>
+            <p><input type="hidden" name="num_doente" value="{{ params.get('num_doente') }}"/></p>
+            <p>Novo numero de doente: <input type="text" name="novo_num_doente"/></p>
+            <p><input type="hidden" name="data" value="{{ params.get('data') }}"/></p>
+            <p>Nova data: <input type="date" name="nova_data"/></p>
+            <p><input type="hidden" name="data_registo" value="{{ params.get('data_registo') }}"/></p>
+            <p>Nova data de registo: <input type="date" name="nova_data_registo"/></p>
+            <p><input type="hidden" name="nome" value="{{ params.get('nome') }}"/></p>
+            <p>Novo nome: <input type="text" name="novo_nome"/></p>
+            <p><input type="hidden" name="quant" value="{{ params.get('quant') }}"/></p>
+            <p>Nova quantidade: <input type="text" name="nova_quant"/></p>
+            <p><input type="hidden" name="inst" value="{{ params.get('inst') }}"/></p>
+            <p>Nova instituição: <input type="text" name="nova_inst"/></p>
+            <p><input type="submit" value="Submit"/></p>
+        </form>
+    </body>
+</html>
