@@ -1,0 +1,11 @@
+<html>
+    <body>
+        <h3>Obter mes e ano</h3>
+        <form action="printsubstancias" method="get">
+        	<p><input type="hidden" name="num_cedula" value="{{ params.get('num_cedula') }}"/></p>
+            <p>Mes: <input type="text" name="novo_mes"/></p>
+            <p>Ano: <input type="text" name="novo_ano"/></p>
+            <p><input type="submit" value="Submit"/></p>
+        </form>
+    </body>
+</html>

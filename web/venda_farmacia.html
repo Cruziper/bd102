@@ -1,0 +1,36 @@
+<doctype html>
+  <title>Realizar vendas em Farmacia - Flask</title>
+  <body style="padding:20px">
+    {% if cursor %}
+      <table border="2px">
+        <thead>
+          <tr>
+            <th>num_venda</th>
+            <th>data_registo</th>
+            <th>substancia</th>
+            <th>quant</th>
+            <th>preco</th>
+            <th>inst</th>
+          </tr>
+        </thead>
+        <tbody>      
+          {% for record in cursor %}
+            <tr>
+              <td>{{ record[0] }}</td>
+              <td>{{ record[1] }}</td>
+              <td>{{ record[2] }}</td>
+              <td>{{ record[3] }}</td>
+              <td>{{ record[4] }}</td>
+              <td>{{ record[5] }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    <br />
+      <button><a href="registo_venda">Adicionar Venda</a></button>
+    {% else %}
+      <p> Erro: ao obter dados da base de dados!</p>
+    {% endif %}
+
+  </body>
+  </doctype>
