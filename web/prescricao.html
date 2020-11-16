@@ -1,0 +1,34 @@
+<doctype html>
+    <title>List Prescrição- Flask</title>
+    <body style="padding:20px">
+        {% if cursor %}
+        <table border="2px">
+          <thead>
+            <tr>
+              <th>num_cedula</th>
+              <th>num_doente</th>
+              <th>data</th>
+              <th>substancia</th>
+              <th>quant</th>
+            </tr>
+          </thead>
+          <tbody>      
+            {% for record in cursor %}
+              <tr>
+                <td>{{ record[0] }}</td>
+                <td>{{ record[1] }}</td>
+                <td>{{ record[2] }}</td>
+                <td>{{ record[3] }}</td>
+                <td>{{ record[4] }}</td>
+                <td><a href="editar_prescricao?num_cedula={{ record[0] }}&num_doente={{ record[1] }}&data={{ record[2] }}&substancia={{ record[3] }}&quant={{ record[4] }}">Editar</a></td>
+                <td><a href="remove_presc?num_cedula={{ record[0] }}&num_doente={{ record[1] }}&data={{ record[2] }}&substancia={{ record[3] }}&quant={{ record[4] }}">Remover</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <p><a href="inserir_prescricao">Inserir</a></p>
+      {% else %}
+        <p> Erro: ao obter dados da base de dados!</p>
+      {% endif %}
+    </body>
+    </doctype>
