@@ -231,16 +231,16 @@ def alter_listasubs():
     return str(e)
 
 
-@app.route('/printsubstancias', methods=["GET"])
+@app.route('/printsubstancias')
 def list_substancias():
   dbConn=None
   cursor=None
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    query = f'''SELECT substancia FROM prescricao_venda WHERE date_part('month', data) = '{request.args.get('novo_mes')}' and date_part('year', data) = '{request.args.get('novo_ano')}' and num_cedula = '{request.form["num_cedula"]}';'''
+    query = f'''SELECT substancia FROM prescricao_venda WHERE date_part('month', data) = '{request.form("novo_mes")}' and date_part('year', data) = '{request.form("novo_ano")}' and num_cedula = '{request.form["num_cedula"]}';'''
     cursor.execute(query)
-    return render_template("printsubstancias.html", cursor=cursor, params=request.args)
+    return render_template("printsubstancias.html",cursor=cursor, params=request.args)
   except Exception as e:
     return str(e) #Renders a page with the error.
   finally:
