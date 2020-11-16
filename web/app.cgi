@@ -427,6 +427,25 @@ def remove_analise():
     cursor.close()
     dbConn.close()
 
+#--------------------------------------------------------------------------------------------------------
+#FUNCOES PRESCRICAO_VENDA----------------------------------------------------------------------------------
+
+@app.route('/prescricao_venda')
+def list_prescricao_venda():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = "SELECT * FROM prescricao_venda;"
+    cursor.execute(query)
+    return render_template("prescricao_venda.html", cursor=cursor, params=request.args)
+  except Exception as e:
+    return str(e) #Renders a page with the error.
+  finally:
+    cursor.close()
+    dbConn.close()
+
 
 CGIHandler().run(app)
 
