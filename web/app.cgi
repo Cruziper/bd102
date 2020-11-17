@@ -224,6 +224,8 @@ def update_venda_farmacia():
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
     query = f'''INSERT INTO venda_farmacia VALUES ('{request.form["num_venda"]}', '{request.form["data_registo"]}', '{request.form["substancia"]}', '{request.form["quant"]}', '{request.form["preco"]}', '{request.form["inst"]}');'''
     cursor.execute(query)
+    query = f'''INSERT INTO prescricao_venda (num_cedula, num_doente, data, substancia, num_venda) SELECT num_cedula, num_doente, data, substancia, '{request.form["num_venda"]}' FROM prescricao WHERE (data='{request.form["data_registo"]}' AND substancia='{request.form["substancia"]}' AND quant = '{request.form["quant"]}');'''
+    cursor.execute(query)
     return redirect(url_for('list_venda_farmacia'))
   except Exception as e:
     return str(e) 
