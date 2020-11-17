@@ -21,6 +21,15 @@ DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (DB_HOST, DB_DA
 ## Runs the function once the root page is requested.
 ## The request comes with the folder structure setting ~/web as the root
 
+#FUNCOES INDEX--------------------------------------------------------------------------------------------
+
+@app.route('/')
+def choose_options():
+  try:
+    return render_template("index.html", params=request.args)
+  except Exception as e:
+    return str(e)
+
 #FUNCOES INSTITUICAO--------------------------------------------------------------------------------------
 
 @app.route('/instituicao')
