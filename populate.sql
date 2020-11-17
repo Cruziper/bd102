@@ -60,6 +60,7 @@ insert into consulta values(5, 7, '2020-11-05', 'C');
 --prescricao (num_cedula, num_doente, data, substancia, quant)
 
 insert into prescricao values(1, 2, '2020-11-03', 'Calcitrin', 2);
+insert into prescricao values(1, 2, '2020-11-03', 'Tantum Verde', 2);
 insert into prescricao values(3, 1, '2019-06-22', 'Ibuprofeno', 1);
 insert into prescricao values(5, 3, '2020-11-13', 'Carbonato de Calcio', 5);
 insert into prescricao values(5, 3, '2020-11-13', 'Paracetamol', 3);
@@ -94,6 +95,7 @@ insert into venda_farmacia values(9, '2020-06-22', 'Aspirina', 4, 25, 'G');
 --prescricao_venda (num_cedula, num_doente, data, substancia, num_venda)
 
 insert into prescricao_venda values(1, 2, '2020-11-03', 'Calcitrin', 1);
+insert into prescricao_venda values(1, 2, '2020-11-03', 'Tantum Verde', 1);
 insert into prescricao_venda values(3, 1, '2019-06-22', 'Ibuprofeno', 2);
 insert into prescricao_venda values(5, 3, '2020-11-13', 'Carbonato de Calcio', 3);
 insert into prescricao_venda values(5, 3, '2020-11-13', 'Paracetamol', 4);

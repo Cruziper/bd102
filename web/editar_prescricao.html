@@ -3,15 +3,15 @@
         <h3>Alterar dados da prescricao {{ params.get("num_cedula") }}</h3>
         <form action="update_presc" method="post">
             <p><input type="hidden" name="num_cedula" value="{{ params.get('num_cedula') }}"/></p>
-            <p>Novo numero de cedula: <input type="text" name="novo_num_cedula"/></p>
+            <p>Novo numero de cedula: <input type="number" name="novo_num_cedula"/></p>
             <p><input type="hidden" name="num_doente" value="{{ params.get('num_doente') }}"/></p>
-            <p>Novo numero de doente: <input type="text" name="novo_num_doente"/></p>
+            <p>Novo numero de doente: <input type="number" name="novo_num_doente"/></p>
             <p><input type="hidden" name="data" value="{{ params.get('data') }}"/></p>
             <p>Nova data: <input type="date" name="nova_data"/></p>
             <p><input type="hidden" name="substancia" value="{{ params.get('substancia') }}"/></p>
             <p>Nova substancia: <input type="text" name="nova_substancia"/></p>
             <p><input type="hidden" name="quant" value="{{ params.get('quant') }}"/></p>
-            <p>Nova quantidade: <input type="text" name="nova_quant"/></p>
+            <p>Nova quantidade: <input type="number" name="nova_quant"/></p>
             <p><input type="submit" value="Submit"/></p>
         </form>
     </body>

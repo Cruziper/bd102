@@ -12,9 +12,9 @@ app = Flask(__name__)
 
 ## SGBD configs
 DB_HOST="db.tecnico.ulisboa.pt"
-DB_USER="ist425999" 
+DB_USER="ist426057" 
 DB_DATABASE=DB_USER
-DB_PASSWORD="gss97"
+DB_PASSWORD="1q2w3e"
 DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD)
 
 
@@ -252,14 +252,14 @@ def alter_listasubs():
     return str(e)
 
 
-@app.route('/printsubstancias')
+@app.route('/printsubstancias', methods=["GET"])
 def list_substancias():
   dbConn=None
   cursor=None
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    query = f'''SELECT substancia FROM prescricao_venda WHERE date_part('month', data) = '{request.form("novo_mes")}' and date_part('year', data) = '{request.form("novo_ano")}' and num_cedula = '{request.form["num_cedula"]}';'''
+    query = f'''SELECT substancia FROM prescricao_venda WHERE num_cedula='{request.args.get('num_cedula')}' and date_part('month', data)='{request.args.get('novo_mes')}' and date_part('year', data)='{request.args.get('novo_ano')}';'''
     cursor.execute(query)
     return render_template("printsubstancias.html",cursor=cursor, params=request.args)
   except Exception as e:
@@ -433,6 +433,25 @@ def remove_analise():
     return str(e) 
   finally:
     dbConn.commit()
+    cursor.close()
+    dbConn.close()
+
+#--------------------------------------------------------------------------------------------------------
+#FUNCOES PRESCRICAO_VENDA----------------------------------------------------------------------------------
+
+@app.route('/prescricao_venda')
+def list_prescricao_venda():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = "SELECT * FROM prescricao_venda;"
+    cursor.execute(query)
+    return render_template("prescricao_venda.html", cursor=cursor, params=request.args)
+  except Exception as e:
+    return str(e) #Renders a page with the error.
+  finally:
     cursor.close()
     dbConn.close()
 
