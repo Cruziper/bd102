@@ -86,8 +86,8 @@ def insert_instituicao():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    query = f'''insert into instituicao values('{request.form["novo_nome"]}', '{request.form["novo_tipo"]}', '{request.form["novo_num_regiao"]}', '{request.form["novo_num_concelho"]}');'''
-    cursor.execute(query)
+    query = '''insert into instituicao values(%s, %s, %s, %s);'''
+    cursor.execute(query, (f'''{request.form["novo_nome"]}''', f'''{request.form["novo_tipo"]}''', f'''{request.form["novo_num_regiao"]}''', f'''{request.form["novo_num_concelho"]}'''))
     return redirect(url_for('list_instituicao'))
   except Exception as e:
     return str(e) 
@@ -170,8 +170,8 @@ def insert_medico():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    query = f'''insert into medico values('{request.form["novo_num_cedula"]}', '{request.form["novo_nome"]}', '{request.form["nova_especialidade"]}');'''
-    cursor.execute(query)
+    query = '''insert into medico values(%s, %s, %s);'''
+    cursor.execute(query, (f'''{request.form["novo_num_cedula"]}''', f'''{request.form["novo_nome"]}''', f'''{request.form["nova_especialidade"]}'''))
     return redirect(url_for('list_medico'))
   except Exception as e:
     return str(e) 
@@ -231,8 +231,8 @@ def update_venda_farmacia():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    query = f'''INSERT INTO venda_farmacia VALUES ('{request.form["num_venda"]}', '{request.form["data_registo"]}', '{request.form["substancia"]}', '{request.form["quant"]}', '{request.form["preco"]}', '{request.form["inst"]}');'''
-    cursor.execute(query)
+    query = '''INSERT INTO venda_farmacia VALUES (%s, %s, %s, %s, %s, %s);'''
+    cursor.execute(query, (f'''{request.form["num_venda"]}''', f'''{request.form["data_registo"]}''', f'''{request.form["substancia"]}''', f'''{request.form["quant"]}''', f'''{request.form["preco"]}''', f'''{request.form["inst"]}'''))
     query = f'''INSERT INTO prescricao_venda (num_cedula, num_doente, data, substancia, num_venda) SELECT num_cedula, num_doente, data, substancia, '{request.form["num_venda"]}' FROM prescricao WHERE (data='{request.form["data_registo"]}' AND substancia='{request.form["substancia"]}' AND quant = '{request.form["quant"]}');'''
     cursor.execute(query)
     return redirect(url_for('list_venda_farmacia'))
@@ -327,8 +327,8 @@ def insert_prescricao():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    query = f'''insert into prescricao values('{request.form["novo_num_cedula"]}', '{request.form["novo_num_doente"]}', '{request.form["nova_data"]}', '{request.form["nova_substancia"]}', '{request.form["nova_quant"]}');'''
-    cursor.execute(query)
+    query = '''insert into prescricao values(%s, %s, %s, %s, %s);'''
+    cursor.execute(query, (f'''{request.form["novo_num_cedula"]}''', f'''{request.form["novo_num_doente"]}''', f'''{request.form["nova_data"]}''', f'''{request.form["nova_substancia"]}''', f'''{request.form["nova_quant"]}'''))
     return redirect(url_for('list_prescricao'))
   except Exception as e:
     return str(e) 
@@ -411,8 +411,8 @@ def insert_analise():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    query = f'''insert into analise values('{request.form["novo_num_analise"]}', '{request.form["nova_especialidade"]}', '{request.form["novo_num_cedula"]}', '{request.form["novo_num_doente"]}', '{request.form["nova_data"]}', '{request.form["nova_data_registo"]}', '{request.form["novo_nome"]}', '{request.form["nova_quant"]}', '{request.form["nova_inst"]}');'''
-    cursor.execute(query)
+    query = '''insert into analise values(%s, %s, %s, %s, %s, %s, %s, %s, %s);'''
+    cursor.execute(query, (f'''{request.form["novo_num_analise"]}''', f'''{request.form["nova_especialidade"]}''', f'''{request.form["novo_num_cedula"]}''', f'''{request.form["novo_num_doente"]}''', f'''{request.form["nova_data"]}''', f'''{request.form["nova_data_registo"]}''', f'''{request.form["novo_nome"]}''', f'''{request.form["nova_quant"]}''', f'''{request.form["nova_inst"]}'''))
     return redirect(url_for('list_analise'))
   except Exception as e:
     return str(e) 
