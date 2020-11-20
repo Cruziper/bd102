@@ -25,12 +25,12 @@ NATURAL JOIN
 	 NATURAL JOIN
 		(SELECT t4.*
 		 FROM (SELECT num_regiao, num_cedula, n_presc,
-      		 		  ROW_NUMBER() OVER (PARTITION BY num_regiao ORDER BY n_presc DESC) as seqnum
+      		 		  ROW_NUMBER() OVER (PARTITION BY num_regiao ORDER BY n_presc DESC) AS seqnum
      		   FROM (SELECT num_regiao, num_cedula, COUNT(num_cedula) AS n_presc
 					 FROM (SELECT *
 				  		   FROM instituicao
 				  		   JOIN (SELECT *
-								 FROm prescricao
+								 FROM prescricao
 								 NATURAL JOIN consulta
 						   		 WHERE consulta.data BETWEEN '2019-01-01' AND '2019-06-30') AS t1
 				  		   ON instituicao.nome = t1.nome_instituicao) as t2
@@ -43,7 +43,7 @@ NATURAL JOIN
 --3.
 
 SELECT nome_medico, num_cedula FROM
-concelho c natural join 
+concelho c natural join
     (SELECT nome_medico, num_cedula, num_concelho FROM
     instituicao i natural join
         (SELECT num_cedula, m.nome as nome_medico, nome_instituicao FROM
@@ -56,6 +56,6 @@ where c.nome = 'Arouca';
 --4.
 
 SELECT num_doente
-FROM consulta 
+FROM consulta
 WHERE num_doente IN (SELECT num_doente FROM analise a WHERE date_part('month', a.data) = date_part('month', CURRENT_DATE))
 AND num_doente NOT IN (SELECT num_doente FROM prescricao p WHERE date_part('month', p.data) = date_part('month', CURRENT_DATE));
