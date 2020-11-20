@@ -3,7 +3,7 @@
         <h3>Alterar dados do medico {{ params.get("num_cedula") }}</h3>
         <form action="update_med" method="post">
             <p><input type="hidden" name="num_cedula" value="{{ params.get('num_cedula') }}"/></p>
-            <p>Novo numero de cedula: <input type="text" name="novo_num_cedula"/></p>
+            <p>Novo numero de cedula: <input type="number" name="novo_num_cedula"/></p>
             <p><input type="hidden" name="nome" value="{{ params.get('nome') }}"/></p>
             <p>Novo nome: <input type="text" name="novo_nome"/></p>
             <p><input type="hidden" name="especialidade" value="{{ params.get('especialidade') }}"/></p>
