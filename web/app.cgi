@@ -12,9 +12,9 @@ app = Flask(__name__)
 
 ## SGBD configs
 DB_HOST="db.tecnico.ulisboa.pt"
-DB_USER="ist425999"
+DB_USER="ist426057" 
 DB_DATABASE=DB_USER
-DB_PASSWORD="gss97"
+DB_PASSWORD="1q2w3e"
 DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD)
 
 
@@ -73,7 +73,7 @@ def update_instituicao():
     cursor.execute(query)
     return redirect(url_for('list_instituicao'))
   except Exception as e:
-    return str(e)
+    return str(e) 
   finally:
     dbConn.commit()
     cursor.close()
@@ -90,7 +90,7 @@ def insert_instituicao():
     cursor.execute(query)
     return redirect(url_for('list_instituicao'))
   except Exception as e:
-    return str(e)
+    return str(e) 
   finally:
     dbConn.commit()
     cursor.close()
@@ -107,7 +107,7 @@ def remove_instituicao():
     cursor.execute(query)
     return redirect(url_for('list_instituicao'))
   except Exception as e:
-    return str(e)
+    return str(e) 
   finally:
     dbConn.commit()
     cursor.close()
@@ -157,12 +157,12 @@ def update_medico():
     cursor.execute(query)
     return redirect(url_for('list_medico'))
   except Exception as e:
-    return str(e)
+    return str(e) 
   finally:
     dbConn.commit()
     cursor.close()
     dbConn.close()
-
+    
 @app.route('/insert_med', methods=["POST"])
 def insert_medico():
   dbConn=None
@@ -174,7 +174,7 @@ def insert_medico():
     cursor.execute(query)
     return redirect(url_for('list_medico'))
   except Exception as e:
-    return str(e)
+    return str(e) 
   finally:
     dbConn.commit()
     cursor.close()
@@ -192,7 +192,7 @@ def remove_medico():
     cursor.execute(query)
     return redirect(url_for('list_medico'))
   except Exception as e:
-    return str(e)
+    return str(e) 
   finally:
     dbConn.commit()
     cursor.close()
@@ -237,7 +237,7 @@ def update_venda_farmacia():
     cursor.execute(query)
     return redirect(url_for('list_venda_farmacia'))
   except Exception as e:
-    return str(e)
+    return str(e) 
   finally:
     dbConn.commit()
     cursor.close()
@@ -314,7 +314,7 @@ def update_prescricao():
     cursor.execute(query)
     return redirect(url_for('list_prescricao'))
   except Exception as e:
-    return str(e)
+    return str(e) 
   finally:
     dbConn.commit()
     cursor.close()
@@ -331,7 +331,7 @@ def insert_prescricao():
     cursor.execute(query)
     return redirect(url_for('list_prescricao'))
   except Exception as e:
-    return str(e)
+    return str(e) 
   finally:
     dbConn.commit()
     cursor.close()
@@ -348,14 +348,14 @@ def remove_prescricao():
     cursor.execute(query)
     return redirect(url_for('list_prescricao'))
   except Exception as e:
-    return str(e)
+    return str(e) 
   finally:
     dbConn.commit()
     cursor.close()
     dbConn.close()
 
 #-------------------------------------------------------------------------------------------------------
-#FUNCOES analise----------------------------------------------------------------------------------------
+#FUNCOES analise---------------------------------------------------------------------------------------
 
 @app.route('/analise')
 def list_analise():
@@ -398,7 +398,7 @@ def update_analise():
     cursor.execute(query)
     return redirect(url_for('list_analise'))
   except Exception as e:
-    return str(e)
+    return str(e) 
   finally:
     dbConn.commit()
     cursor.close()
@@ -415,7 +415,7 @@ def insert_analise():
     cursor.execute(query)
     return redirect(url_for('list_analise'))
   except Exception as e:
-    return str(e)
+    return str(e) 
   finally:
     dbConn.commit()
     cursor.close()
@@ -432,14 +432,14 @@ def remove_analise():
     cursor.execute(query)
     return redirect(url_for('list_analise'))
   except Exception as e:
-    return str(e)
+    return str(e) 
   finally:
     dbConn.commit()
     cursor.close()
     dbConn.close()
 
 #--------------------------------------------------------------------------------------------------------
-#FUNCOES PRESCRICAO_VENDA--------------------------------------------------------------------------------
+#FUNCOES PRESCRICAO_VENDA----------------------------------------------------------------------------------
 
 @app.route('/prescricao_venda')
 def list_prescricao_venda():
@@ -458,13 +458,8 @@ def list_prescricao_venda():
     dbConn.close()
 
 
-CGIHandler().run(app)
-
-#--------------------------------------------------------------------------------------------------------
-#FUNCOES LISTAR_VALORES_DE_GLICEMIA----------------------------------------------------------------------
-
 @app.route('/lista_glicemia')
-def list_prescricao_venda():
+def list_glicemia():
   dbConn=None
   cursor=None
   try:
@@ -476,7 +471,7 @@ def list_prescricao_venda():
              (SELECT t.*\
              FROM (SELECT num_doente, quant, num_regiao, num_concelho,\
                           ROW_NUMBER() OVER (PARTITION BY num_regiao ORDER BY quant DESC) as seqnum\
-                   FROM (SELECT * FROM analise WHERE nome = 'A') t1 JOIN\
+                   FROM (SELECT * FROM analise WHERE nome = 'glicemia') t1 JOIN\
                          instituicao t2\
                          ON t1.inst = t2.nome\
                    ) AS t\
@@ -489,7 +484,7 @@ def list_prescricao_venda():
              (SELECT t.*\
              FROM (SELECT num_doente, quant, num_regiao, num_concelho,\
                           ROW_NUMBER() OVER (PARTITION BY num_regiao ORDER BY quant ASC) as seqnum\
-                   FROM (SELECT * FROM analise WHERE nome = 'A') t1 JOIN\
+                   FROM (SELECT * FROM analise WHERE nome = 'glicemia') t1 JOIN\
                          instituicao t2\
                          ON t1.inst = t2.nome\
                    ) AS t\
@@ -505,3 +500,4 @@ def list_prescricao_venda():
 
 
 CGIHandler().run(app)
+
