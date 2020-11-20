@@ -17,14 +17,26 @@ NATURAL JOIN
 ---------------------------------------------------------------------
 --2.
 
-SELECT num_regiao, num_p.nome FROM
-regiao r natural join
-    (SELECT m.nome, num_regiao, COUNT(num_cedula) as prescricoes FROM
-    medico m natural join prescricao natural join instituicao i natural join consulta c
-    where i.nome = c.nome_instituicao and m.nome != i.nome and data between '2019-01-01' and '2019-06-30'
-    GROUP BY m.nome, num_regiao) as num_r
-WHERE r.nome != num_r.nome
-GROUP BY num_regiao;
+SELECT regiao, nome AS medico
+FROM medico
+NATURAL JOIN
+	(SELECT nome AS regiao, num_cedula
+	 FROM regiao
+	 NATURAL JOIN
+		(SELECT t4.*
+		 FROM (SELECT num_regiao, num_cedula, n_presc,
+      		 		  ROW_NUMBER() OVER (PARTITION BY num_regiao ORDER BY n_presc DESC) as seqnum
+     		   FROM (SELECT num_regiao, num_cedula, COUNT(num_cedula) AS n_presc
+					 FROM (SELECT *
+				  		   FROM instituicao
+				  		   JOIN (SELECT *
+								 FROm prescricao
+								 NATURAL JOIN consulta
+						   		 WHERE consulta.data BETWEEN '2019-01-01' AND '2019-06-30') AS t1
+				  		   ON instituicao.nome = t1.nome_instituicao) as t2
+					 GROUP BY num_regiao, num_cedula) as t3
+      		  ) AS t4
+		 WHERE seqnum = 1) AS t5) AS t6;
 
 
 --------------------------------------------------------------------

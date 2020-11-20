@@ -1,0 +1,29 @@
+<doctype html>
+  <title>Lista Valores de Glicemia - Flask</title>
+  <body style="padding:20px">
+    {% if cursor %}
+      <table border="2px">
+        <thead>
+          <tr>
+            <th>concelho</th>
+            <th>num_doente</th>
+            <th>quant</th>
+          </tr>
+        </thead>
+        <tbody>      
+          {% for record in cursor %}
+            <tr>
+              <td>{{ record[0] }}</td>
+              <td>{{ record[1] }}</td>
+              <td>{{ record[2] }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    <br />
+    {% else %}
+      <p> Erro: ao obter dados da base de dados!</p>
+    {% endif %}
+
+  </body>
+  </doctype>

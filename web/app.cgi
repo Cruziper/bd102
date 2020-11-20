@@ -355,7 +355,7 @@ def remove_prescricao():
     dbConn.close()
 
 #-------------------------------------------------------------------------------------------------------
-#FUNCOES analise---------------------------------------------------------------------------------------
+#FUNCOES analise----------------------------------------------------------------------------------------
 
 @app.route('/analise')
 def list_analise():
@@ -439,7 +439,7 @@ def remove_analise():
     dbConn.close()
 
 #--------------------------------------------------------------------------------------------------------
-#FUNCOES PRESCRICAO_VENDA----------------------------------------------------------------------------------
+#FUNCOES PRESCRICAO_VENDA--------------------------------------------------------------------------------
 
 @app.route('/prescricao_venda')
 def list_prescricao_venda():
@@ -460,3 +460,48 @@ def list_prescricao_venda():
 
 CGIHandler().run(app)
 
+#--------------------------------------------------------------------------------------------------------
+#FUNCOES LISTAR_VALORES_DE_GLICEMIA----------------------------------------------------------------------
+
+@app.route('/lista_valores_de_glicemia')
+def list_prescricao_venda():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    query = "SELECT concelho.nome as concelho, num_doente, quant\
+             FROM concelho\
+             JOIN\
+             (SELECT t.*\
+             FROM (SELECT num_doente, quant, num_regiao, num_concelho,\
+                          ROW_NUMBER() OVER (PARTITION BY num_regiao ORDER BY quant DESC) as seqnum\
+                   FROM (SELECT * FROM analise WHERE nome = 'A') t1 JOIN\
+                         instituicao t2\
+                         ON t1.inst = t2.nome\
+                   ) AS t\
+             WHERE seqnum = 1) AS max_num\
+             ON concelho.num_concelho = max_num.num_concelho AND concelho.num_regiao = max_num.num_regiao\
+             UNION ALL\
+             SELECT concelho.nome as concelho, num_doente, quant\
+             FROM concelho\
+             JOIN\
+             (SELECT t.*\
+             FROM (SELECT num_doente, quant, num_regiao, num_concelho,\
+                          ROW_NUMBER() OVER (PARTITION BY num_regiao ORDER BY quant ASC) as seqnum\
+                   FROM (SELECT * FROM analise WHERE nome = 'A') t1 JOIN\
+                         instituicao t2\
+                         ON t1.inst = t2.nome\
+                   ) AS t\
+             WHERE seqnum = 1) AS max_num\
+             ON concelho.num_concelho = max_num.num_concelho AND concelho.num_regiao = max_num.num_regiao;"
+    cursor.execute(query)
+    return render_template("lista_valores_de_glicemia.html", cursor=cursor, params=request.args)
+  except Exception as e:
+    return str(e) #Renders a page with the error.
+  finally:
+    cursor.close()
+    dbConn.close()
+
+
+CGIHandler().run(app)
