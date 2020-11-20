@@ -471,20 +471,20 @@ def list_glicemia():
              (SELECT t.*\
              FROM (SELECT num_doente, quant, num_regiao, num_concelho,\
                           ROW_NUMBER() OVER (PARTITION BY num_regiao ORDER BY quant DESC) as seqnum\
-                   FROM (SELECT * FROM analise WHERE nome = 'glicemia') t1 JOIN\
+                   FROM (SELECT * FROM analise WHERE nome = 'Glicemia') t1 JOIN\
                          instituicao t2\
                          ON t1.inst = t2.nome\
                    ) AS t\
              WHERE seqnum = 1) AS max_num\
              ON concelho.num_concelho = max_num.num_concelho AND concelho.num_regiao = max_num.num_regiao\
-             UNION ALL\
+             UNION \
              SELECT concelho.nome as concelho, num_doente, quant\
              FROM concelho\
              JOIN\
              (SELECT t.*\
              FROM (SELECT num_doente, quant, num_regiao, num_concelho,\
                           ROW_NUMBER() OVER (PARTITION BY num_regiao ORDER BY quant ASC) as seqnum\
-                   FROM (SELECT * FROM analise WHERE nome = 'glicemia') t1 JOIN\
+                   FROM (SELECT * FROM analise WHERE nome = 'Glicemia') t1 JOIN\
                          instituicao t2\
                          ON t1.inst = t2.nome\
                    ) AS t\
